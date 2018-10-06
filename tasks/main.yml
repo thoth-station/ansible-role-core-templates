@@ -10,7 +10,7 @@
 
 - name: create Thoth Core template
   command: oc create --save-config=true --namespace "{{ namespace  }}" \
-    --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/configmap-template.yaml
+    --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/template.yaml
 
 - name: create Thoth Core secrets template
   command: oc create --save-config=true --namespace "{{ namespace  }}" \
