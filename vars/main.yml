@@ -1,0 +1,4 @@
+---
+openshift_api_url: https://api.openshift.example.com/
+token: mysecrettoken
+namespace: thoth-test-core
