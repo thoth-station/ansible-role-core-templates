@@ -57,3 +57,4 @@
     - https://raw.githubusercontent.com/thoth-station/package-extract/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/cve-update-job/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/imageStream-template.yaml
