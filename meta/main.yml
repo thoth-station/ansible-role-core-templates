@@ -1,5 +1,6 @@
 galaxy_info:
   author: Christoph Görn
+  role_name: "core_templates"
   description: This role will create an OpenShift Templates required to deploy Thoth.
   company: Red Hat
 
