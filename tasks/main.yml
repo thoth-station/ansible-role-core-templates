@@ -21,7 +21,7 @@
   with_items:
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/result-api/master/openshift/deployment-template.yaml
-    - https://github.com/thoth-station/isis-api/blob/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/isis-api/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/management-api/master/openshift/deployment-template.yaml
 
 - name: create Thoth Core CronJob templates
