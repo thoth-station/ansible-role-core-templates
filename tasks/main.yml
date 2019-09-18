@@ -40,6 +40,7 @@
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/inspectionSyncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/packageExtractSyncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/solverSyncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/job-kebechet-template.yaml
 
 - name: create Thoth Core BuildConfig templates
   command: oc create --save-config=true --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -58,6 +59,7 @@
     - https://raw.githubusercontent.com/thoth-station/management-api/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-scheduler/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-watcher/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/buildConfig-template.yaml
 
 - name: create Thoth Core ImageStream templates
   command: oc create --save-config=true --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -75,3 +77,4 @@
     - https://raw.githubusercontent.com/thoth-station/management-api/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-scheduler/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-watcher/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/imageStream-template.yaml
