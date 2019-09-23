@@ -9,18 +9,15 @@
     --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/template.yaml
 
 - name: create Thoth Core secrets template
-  command: oc apply --namespace "{{ namespace  }}" \
-    --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/secret-template.yaml
-    --filename https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/secret-template.yaml 
+  command: "oc apply --namespace {{ namespace  }} --filename {{ item }}"
+  with_items:
+    - https://raw.githubusercontent.com/thoth-station/core/master/openshift/secret-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/secret-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/secrets-template.yaml
 
 - name: create Thoth Core configmap template
   command: oc apply --namespace "{{ namespace  }}" \
     --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/configmap-template.yaml
-
-- name: "create Thoth Job templates in {{ namespace }}"
-      command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
-      with_items:
-        - "https://raw.githubusercontent.com/thoth-station/solver/master/openshift/job-template.yaml"
 
 - name: create Thoth Core Deployment templates
   command: "oc apply --namespace {{ namespace }} --filename {{ item }}"
@@ -31,6 +28,10 @@
     - https://raw.githubusercontent.com/thoth-station/management-api/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-scheduler/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-watcher/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/isis-api/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/metrics-exporter/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/deployment-template.yaml
 
 - name: create Thoth Core CronJob templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -47,6 +48,23 @@
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/packageExtractSyncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/solverSyncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/job-kebechet-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-provenanceChecker-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-adviser-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-dependencyMonkey-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectJobWithCPU-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/package-extract/master/openshift/job-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/package-analyzer/master/openshift/job-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/adviserSyncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/provenanceCheckerSyncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/packageAnalyzerSyncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/syncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/job-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-analyze-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-dependencies-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-report-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/job-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/dependencyMonkeySyncJob.yaml
 
 - name: create Thoth Core BuildConfig templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -66,6 +84,11 @@
     - https://raw.githubusercontent.com/thoth-station/graph-sync-scheduler/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-watcher/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-hwinfo/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectBuildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/metrics-exporter/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/buildConfig-template.yaml
 
 - name: create Thoth Core ImageStream templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -84,3 +107,7 @@
     - https://raw.githubusercontent.com/thoth-station/graph-sync-scheduler/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-watcher/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-hwinfo/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectImageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/metrics-exporter/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/imageStream-template.yaml
