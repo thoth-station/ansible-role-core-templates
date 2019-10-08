@@ -44,9 +44,7 @@
 - name: create Thoth Core Job templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
   with_items:
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/inspectionSyncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/packageExtractSyncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/solverSyncJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/syncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/job-kebechet-template.yaml
     - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-provenanceChecker-template.yaml
     - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-adviser-template.yaml
@@ -55,16 +53,11 @@
     - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectJobWithCPU-template.yaml
     - https://raw.githubusercontent.com/thoth-station/package-extract/master/openshift/job-template.yaml
     - https://raw.githubusercontent.com/thoth-station/package-analyzer/master/openshift/job-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/adviserSyncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/provenanceCheckerSyncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/packageAnalyzerSyncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/syncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/job-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-analyze-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-dependencies-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-report-template.yaml
     - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/job-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/dependencyMonkeySyncJob.yaml
 
 - name: create Thoth Core BuildConfig templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
