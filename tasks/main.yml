@@ -29,8 +29,8 @@
     - https://raw.githubusercontent.com/thoth-station/management-api/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/metrics-exporter/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/result-api/master/openshift/deployment-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/deployment-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/deployment-template.yaml
 
 - name: create Thoth Core CronJob templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
@@ -82,11 +82,13 @@
     - https://raw.githubusercontent.com/thoth-station/result-api/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/buildConfig-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/imageStream-template.yaml
 
 - name: create Thoth Core ImageStream templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
   with_items:
     - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/imagestream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectImageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/amun-hwinfo/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/imageStream-template.yaml
@@ -105,3 +107,4 @@
     - https://raw.githubusercontent.com/thoth-station/package-releases-job/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/imageStream-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/buildConfig-template.yaml
