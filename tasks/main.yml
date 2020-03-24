@@ -5,18 +5,18 @@
   ignore_errors: true
 
 - name: create Thoth Core template
-  command: oc apply --namespace "{{ namespace  }}" \
+  command: oc apply --namespace "{{ namespace }}" \
     --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/template.yaml
 
 - name: create Thoth Core secrets template
-  command: "oc apply --namespace {{ namespace  }} --filename {{ item }}"
+  command: "oc apply --namespace {{ namespace }} --filename {{ item }}"
   with_items:
     - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/secrets-template.yaml
     - https://raw.githubusercontent.com/thoth-station/core/master/openshift/secret-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/secret-template.yaml
 
 - name: create Thoth Core configmap template
-  command: oc apply --namespace "{{ namespace  }}" \
+  command: oc apply --namespace "{{ namespace }}" \
     --filename https://raw.githubusercontent.com/thoth-station/core/master/openshift/configmap-template.yaml
 
 - name: create Thoth Core Deployment templates
@@ -32,37 +32,89 @@
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/deployment-template.yaml
     - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/deployment-template.yaml
 
+- name: Download Thoth Core CronJob templates
+  get_url:
+    url: "https://raw.githubusercontent.com/thoth-station/{{ item.base }}/master/openshift/{{ item.file_name }}"
+    dest: "/tmp/{{ item.base }}-{{ item.file_name }}"
+  loop:
+    - { base: "cve-update-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-backup-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-refresh-job", file_name: "cronJob-template.yaml" }
+    - { base: "package-releases-job", file_name: "cronJob-template.yaml" }
+    - { base: "cleanup-job", file_name: "cronJob-template.yaml" }
+    - { base: "adviser", file_name: "job-adviser-template.yaml" }
+    - { base: "adviser", file_name: "job-provenanceChecker-template.yaml" }
+    - { base: "adviser", file_name: "job-dependencyMonkey-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJob-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJobWithCPU-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-analyze-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-dependencies-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-report-template.yaml" }
+    - { base: "graph-sync-job", file_name: "syncJob-template.yaml" }
+    - { base: "init-job", file_name: "job-template.yaml" }
+    - { base: "kebechet", file_name: "job-kebechet-template.yaml" }
+    - { base: "kebechet", file_name: "kebechet-template.yaml" }
+    - { base: "package-analyzer", file_name: "job-template.yaml" }
+    - { base: "package-extract", file_name: "job-template.yaml" }
+    - { base: "solver", file_name: "job-template.yaml" }
+
+- name: Fix up Thoth Core CronJob templates
+  replace:
+    path: "/tmp/{{ item.base }}-{{ item.file_name }}"
+    regexp: 'thoth-infra-stage'
+    replace: '{{ namespace }}'
+  loop:
+    - { base: "cve-update-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-backup-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-refresh-job", file_name: "cronJob-template.yaml" }
+    - { base: "package-releases-job", file_name: "cronJob-template.yaml" }
+    - { base: "cleanup-job", file_name: "cronJob-template.yaml" }
+    - { base: "adviser", file_name: "job-adviser-template.yaml" }
+    - { base: "adviser", file_name: "job-provenanceChecker-template.yaml" }
+    - { base: "adviser", file_name: "job-dependencyMonkey-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJob-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJobWithCPU-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-analyze-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-dependencies-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-report-template.yaml" }
+    - { base: "graph-sync-job", file_name: "syncJob-template.yaml" }
+    - { base: "init-job", file_name: "job-template.yaml" }
+    - { base: "kebechet", file_name: "job-kebechet-template.yaml" }
+    - { base: "kebechet", file_name: "kebechet-template.yaml" }
+    - { base: "package-analyzer", file_name: "job-template.yaml" }
+    - { base: "package-extract", file_name: "job-template.yaml" }
+    - { base: "solver", file_name: "job-template.yaml" }
+
 - name: create Thoth Core CronJob templates
-  command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
-  with_items:
-    - https://raw.githubusercontent.com/thoth-station/cleanup-job/master/openshift/cronJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/cve-update-job/master/openshift/cronJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-backup-job/master/openshift/cronJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-refresh-job/master/openshift/cronJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/package-releases-job/master/openshift/cronJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/cronJob-template.yaml
+  command: oc apply --namespace "{{ namespace }}" --filename "/tmp/{{ item.base }}-{{ item.file_name }}"
+  loop:
+    - { base: "cve-update-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-backup-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-refresh-job", file_name: "cronJob-template.yaml" }
+    - { base: "package-releases-job", file_name: "cronJob-template.yaml" }
+    - { base: "cleanup-job", file_name: "cronJob-template.yaml" }
 
 - name: create Thoth Core Job templates
-  command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
-  with_items:
-    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-adviser-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-provenanceChecker-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/job-dependencyMonkey-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/inspectJobWithCPU-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-analyze-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-dependencies-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/build-analyzers/master/openshift/job-build-report-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/syncJob-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/job-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/job-kebechet-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/kebechet-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/package-analyzer/master/openshift/job-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/package-extract/master/openshift/job-template.yaml
-    - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/job-template.yaml
+  command: oc apply --namespace "{{ namespace }}" --filename "/tmp/{{ item.base }}-{{ item.file_name }}"
+  loop:
+    - { base: "adviser", file_name: "job-adviser-template.yaml" }
+    - { base: "adviser", file_name: "job-provenanceChecker-template.yaml" }
+    - { base: "adviser", file_name: "job-dependencyMonkey-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJob-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJobWithCPU-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-analyze-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-dependencies-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-report-template.yaml" }
+    - { base: "graph-sync-job", file_name: "syncJob-template.yaml" }
+    - { base: "init-job", file_name: "job-template.yaml" }
+    - { base: "kebechet", file_name: "job-kebechet-template.yaml" }
+    - { base: "kebechet", file_name: "kebechet-template.yaml" }
+    - { base: "package-analyzer", file_name: "job-template.yaml" }
+    - { base: "package-extract", file_name: "job-template.yaml" }
+    - { base: "solver", file_name: "job-template.yaml" }
 
 - name: create Thoth Core BuildConfig templates
-  command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
+  command: oc apply --namespace "{{ namespace }}" --filename "{{ item }}"
   with_items:
     - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/buildConfig-template.yaml
     - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/buildConfig-template.yaml
@@ -89,7 +141,7 @@
     - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/buildConfig-template.yaml
 
 - name: create Thoth Core ImageStream templates
-  command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
+  command: oc apply --namespace "{{ namespace }}" --filename "{{ item }}"
   with_items:
     - https://raw.githubusercontent.com/thoth-station/adviser/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/amun-api/master/openshift/imagestream-template.yaml
@@ -113,3 +165,28 @@
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/user-api/master/openshift/imageStream-template.yaml
     - https://raw.githubusercontent.com/thoth-station/workload-operator/master/openshift/imageStream-template.yaml
+
+- name: cleanup temperory downloaded files
+  file:
+    path: "/tmp/{{ item.base }}-{{ item.file_name }}"
+    state: absent
+  loop:
+    - { base: "cve-update-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-backup-job", file_name: "cronJob-template.yaml" }
+    - { base: "graph-refresh-job", file_name: "cronJob-template.yaml" }
+    - { base: "package-releases-job", file_name: "cronJob-template.yaml" }
+    - { base: "cleanup-job", file_name: "cronJob-template.yaml" }
+    - { base: "adviser", file_name: "job-adviser-template.yaml" }
+    - { base: "adviser", file_name: "job-provenanceChecker-template.yaml" }
+    - { base: "adviser", file_name: "job-dependencyMonkey-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJob-template.yaml" }
+    - { base: "amun-api", file_name: "inspectJobWithCPU-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-analyze-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-dependencies-template.yaml" }
+    - { base: "build-analyzers", file_name: "job-build-report-template.yaml" }
+    - { base: "graph-sync-job", file_name: "syncJob-template.yaml" }
+    - { base: "init-job", file_name: "job-template.yaml" }
+    - { base: "kebechet", file_name: "job-kebechet-template.yaml" }
+    - { base: "package-analyzer", file_name: "job-template.yaml" }
+    - { base: "package-extract", file_name: "job-template.yaml" }
+    - { base: "solver", file_name: "job-template.yaml" }
