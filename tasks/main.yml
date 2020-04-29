@@ -56,6 +56,7 @@
     - https://raw.githubusercontent.com/thoth-station/graph-sync-job/master/openshift/syncJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/job-template.yaml
     - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/job-kebechet-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/kebechet/master/openshift/kebechet-template.yaml
     - https://raw.githubusercontent.com/thoth-station/package-analyzer/master/openshift/job-template.yaml
     - https://raw.githubusercontent.com/thoth-station/package-extract/master/openshift/job-template.yaml
     - https://raw.githubusercontent.com/thoth-station/solver/master/openshift/job-template.yaml
