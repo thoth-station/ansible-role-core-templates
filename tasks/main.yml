@@ -40,6 +40,7 @@
     - https://raw.githubusercontent.com/thoth-station/graph-backup-job/master/openshift/cronJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/graph-refresh-job/master/openshift/cronJob-template.yaml
     - https://raw.githubusercontent.com/thoth-station/package-releases-job/master/openshift/cronJob-template.yaml
+    - https://raw.githubusercontent.com/thoth-station/init-job/master/openshift/cronJob-template.yaml
 
 - name: create Thoth Core Job templates
   command: oc apply --namespace "{{ namespace  }}" --filename "{{ item }}"
